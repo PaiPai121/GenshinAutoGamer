@@ -46,7 +46,7 @@ def capture(handle: HWND):
     DeleteObject(cdc)
     ReleaseDC(handle, dc)
     # 返回截图数据为numpy.ndarray
-    return np.frombuffer(buffer, dtype=np.uint8).reshape(height, width, 4)
+    return cv2.cvtColor(np.frombuffer(buffer, dtype=np.uint8).reshape(height, width, 4),cv2.COLOR_RGBA2RGB)
 
 def BGR_to_RGB(img):
     res = img.copy()
@@ -57,20 +57,9 @@ if __name__ == "__main__":
     import cv2
     handle = windll.user32.FindWindowW(None, "原神")
     image = capture(handle)
-    cv2.imshow("Capture Test", image)
-    cv2.waitKey()
     cv2.imwrite("./assets/setting.png",image)
     checker = PatternChecker()
-    
     region = cv2.imread("./assets/exit.png",cv2.IMREAD_UNCHANGED)
-    
-    pattern = image
-    pattern = cv2.cvtColor(pattern,cv2.COLOR_RGBA2RGB)
     region = cv2.cvtColor(region,cv2.COLOR_BGR2RGB)
     region = BGR_to_RGB(region)
-    cv2.imshow("123,",region)
-    cv2.imshow("region",pattern)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
-    # cv2.matchTemplate(region, pattern, cv2.TM_SQDIFF_NORMED)
-    checker.patternMatch(region, pattern,show = True)
+    checker.patternMatch(region, image,show = True)

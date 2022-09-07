@@ -1,4 +1,4 @@
-from getApplicationCapture import WindowCapture
+from rubbish.getApplicationCapture import WindowCapture
 if __name__ == '__main__':
     cap = WindowCapture("《星际争霸II》")
 
