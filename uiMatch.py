@@ -85,7 +85,7 @@ class PatternChecker():
         results = cv2.matchTemplate(region, pattern, cv2.TM_SQDIFF_NORMED)
         minValue, maxValue, resultPoint1, resultPoint2 = cv2.minMaxLoc(results)
         print(minValue,maxValue)
-        if minValue < 0.1:
+        if minValue < 0.01:
             print("find position")
         else:
             return None
