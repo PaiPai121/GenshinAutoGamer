@@ -1,6 +1,7 @@
 import asyncio
 import vgamepad as vg
 import random
+
 class GamepadTaskHandler():
     def __init__(self,gamepad = None) -> None:
         self.gamepad = gamepad 
@@ -14,7 +15,7 @@ class GamepadTaskHandler():
             self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_CIRCLE)
             await asyncio.sleep(0.15)
             self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_CIRCLE)
-            print("release button Circle")
+            # print("release button Circle")
         # 1 仅按下
         if mode == 1:
             self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_CIRCLE)
@@ -34,7 +35,7 @@ class GamepadTaskHandler():
         # 0 快速按下，约150ms后释放
         if mode == 0:
             self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_CROSS)
-            await asyncio.sleep(0.125+random.randint(50)/1000)
+            await asyncio.sleep(0.125)
             self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_CROSS)
         # 1 仅按下
         if mode == 1:
@@ -46,10 +47,11 @@ class GamepadTaskHandler():
 
     # []
     async def pressButtonSquare(self,mode = 0):
+        print("press button Square")
         # 0 快速按下，约150ms后释放
         if mode == 0:
             self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_SQUARE)
-            await asyncio.sleep(0.125+random.randint(50)/1000)
+            await asyncio.sleep(0.125)
             self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_SQUARE)
         # 1 仅按下
         if mode == 1:
@@ -64,10 +66,11 @@ class GamepadTaskHandler():
 
     # Tri
     async def pressButtonTriangle(self,mode = 0):
+        print("press button Triangle")
         # 0 快速按下，约150ms后释放
         if mode == 0:
             self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_TRIANGLE)
-            await asyncio.sleep(0.125+random.randint(50)/1000)
+            await asyncio.sleep(0.125)
             self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_TRIANGLE)
         # 1 仅按下
         if mode == 1:
@@ -80,99 +83,64 @@ class GamepadTaskHandler():
         # await asyncio.sleep(1)
         # print("release button Triangle")
 
-    # up
-    async def pressButtonDpadUp(self,mode = 0):
+    # dpad
+    async def pressButtonDpad(self,which = "up",mode = 0):
+        print("press button Dpad")
+        if which == "up" or which == 0:
+            button = vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_NORTH
+        elif which == "down" or which == 1:
+            button = vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_SOUTH
+        elif which == "left" or which == 2:
+            button = vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_WEST
+        elif which == "right" or which == 3:
+            button = vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_EAST
         # 0 快速按下，约150ms后释放
         if mode == 0:
-            self.gamepad.press_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_NORTH)
-            await asyncio.sleep(0.125+random.randint(50)/1000)
-            self.gamepad.release_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_NORTH)
+            self.gamepad.directional_pad(direction=button)
+            # self.gamepad.press_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_NORTH)
+            await asyncio.sleep(0.125)
+            # self.gamepad.release_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_NORTH)
+            self.gamepad.directional_pad(direction=vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_NONE)
         # 1 仅按下
         if mode == 1:
-            self.gamepad.press_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_NORTH)
+            # self.gamepad.press_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_NORTH)
+            self.gamepad.directional_pad(direction=button)
         
         # 2 仅松开
         if mode == 2:
-            self.gamepad.release_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_NORTH)
-
+            # self.gamepad.release_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_NORTH)
+            self.gamepad.directional_pad(direction=vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_NONE)
         # print("press button O")
         # await asyncio.sleep(1)
         # print("release button O")
 
-    # down
-    async def pressButtonDpadDown(self,mode = 0):
-        # 0 快速按下，约150ms后释放
-        if mode == 0:
-            self.gamepad.press_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_SOUTH)
-            await asyncio.sleep(0.125+random.randint(50)/1000)
-            self.gamepad.release_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_SOUTH)
-        # 1 仅按下
-        if mode == 1:
-            self.gamepad.press_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_SOUTH)
-        
-        # 2 仅松开
-        if mode == 2:
-            self.gamepad.release_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_SOUTH)
-        # print("press button X")
-        # await asyncio.sleep(1)
-        # print("release button X")
-
-    # left
-    async def pressButtonDpadLeft(self,mode = 0):
-        # print("press button Square")
-        # await asyncio.sleep(1)
-        # print("release button Square")
-        # 0 快速按下，约150ms后释放
-        if mode == 0:
-            self.gamepad.press_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_WEST)
-            await asyncio.sleep(0.125+random.randint(50)/1000)
-            self.gamepad.release_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_WEST)
-        # 1 仅按下
-        if mode == 1:
-            self.gamepad.press_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_WEST)
-        
-        # 2 仅松开
-        if mode == 2:
-            self.gamepad.release_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_WEST)
-
-
-    # right
-    async def pressButtonDpadRight(self,mode = 0):
-        print("press button DpadRight")
-        # await asyncio.sleep(1)
-        # print("release button DpadRight")
-        # 0 快速按下，约150ms后释放
-        if mode == 0:
-            self.gamepad.press_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_EAST)
-            await asyncio.sleep(0.125+random.randint(50)/1000)
-            self.gamepad.release_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_EAST)
-        # 1 仅按下
-        if mode == 1:
-            self.gamepad.press_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_EAST)
-        
-        # 2 仅松开
-        if mode == 2:
-            self.gamepad.release_button(vg.DS4_DPAD_DIRECTIONS.DS4_BUTTON_DPAD_EAST)
-
-
-
 
     # left stick
-    async def setLeftStick(self,x=0,y=0):
-        # print("turn left stick")
-        self.gamepad.right_joystick_float(x,y)
-
+    async def setLeftStick(self,x=0,y=0,mode = 1):
+        print("turn left stick")
+        if mode == 0:
+            self.gamepad.left_joystick_float(x,y)
+            await asyncio.sleep(0.125)
+            self.gamepad.left_joystick_float(0,0)
+        elif mode  == 1:
+            self.gamepad.left_joystick_float(x,y)
+            
     # right stick
-    async def setRightStick(self,x=0,y=0):
-        # print("turn right stick")
-        self.gamepad.right_joystick_float(x,y)
-        
+    async def setRightStick(self,x=0,y=0,mode = 1):
+        print("turn right stick")
+        if mode ==0:
+            self.gamepad.right_joystick_float(x,y)
+            await asyncio.sleep(0.125)
+            self.gamepad.right_joystick_float(0,0)
+        elif mode == 1:
+            self.gamepad.right_joystick_float(x,y)
     # left shoulder
     async def pressButtonShoulderLeft(self,mode = 0):
+        print("press button ShoulderLeft")
         # 0 快速按下，约150ms后释放
         if mode == 0:
             self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_SHOULDER_LEFT)
-            await asyncio.sleep(0.125+random.randint(50)/1000)
+            await asyncio.sleep(0.125)
             self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_SHOULDER_LEFT)
         # 1 仅按下
         if mode == 1:
@@ -184,10 +152,11 @@ class GamepadTaskHandler():
 
     # right shoulder
     async def pressButtonShoulderRight(self,mode = 0):
+        print("press button ShoulderRight")
         # 0 快速按下，约150ms后释放
         if mode == 0:
             self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_SHOULDER_RIGHT)
-            await asyncio.sleep(0.125+random.randint(50)/1000)
+            await asyncio.sleep(0.125)
             self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_SHOULDER_RIGHT)
         # 1 仅按下
         if mode == 1:
@@ -199,10 +168,11 @@ class GamepadTaskHandler():
 
     # left trigger
     async def pressButtonTriggerLeft(self,mode = 0):
+        print("press button TriggerLeft")
         # 0 快速按下，约150ms后释放
         if mode == 0:
             self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_TRIGGER_LEFT)
-            await asyncio.sleep(0.125+random.randint(50)/1000)
+            await asyncio.sleep(0.125)
             self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_TRIGGER_LEFT)
         # 1 仅按下
         if mode == 1:
@@ -214,10 +184,11 @@ class GamepadTaskHandler():
 
     # right trigger
     async def pressButtonTriggerRight(self,mode = 0):
+        print("press button TriggerRight")
         # 0 快速按下，约150ms后释放
         if mode == 0:
             self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_TRIGGER_LEFT)
-            await asyncio.sleep(0.125+random.randint(50)/1000)
+            await asyncio.sleep(0.125)
             self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_TRIGGER_LEFT)
         # 1 仅按下
         if mode == 1:
@@ -226,6 +197,72 @@ class GamepadTaskHandler():
         # 2 仅松开
         if mode == 2:
             self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_TRIGGER_LEFT)
+    
+    # option
+    async def pressButtonOptions(self,mode = 0):
+        print("press button Options")
+        # 0 快速按下，约150ms后释放
+        if mode == 0:
+            self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_OPTIONS)
+            await asyncio.sleep(0.125)
+            self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_OPTIONS)
+        # 1 仅按下
+        if mode == 1:
+            self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_OPTIONS)
+        
+        # 2 仅松开
+        if mode == 2:
+            self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_OPTIONS)
+    
+    # share
+    async def pressButtonShare(self,mode = 0):
+        print("press button Share")
+        # 0 快速按下，约150ms后释放
+        if mode == 0:
+            self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_SHARE)
+            await asyncio.sleep(0.125)
+            self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_SHARE)
+        # 1 仅按下
+        if mode == 1:
+            self.gamepad.press_button(vg.DS4_BUTTONS.DS4_BUTTON_SHARE)
+        
+        # 2 仅松开
+        if mode == 2:
+            self.gamepad.release_button(vg.DS4_BUTTONS.DS4_BUTTON_SHARE)
+    
+    # ps
+    async def pressButtonPS(self,mode = 0):
+        print("press button PS")
+        # 0 快速按下，约150ms后释放
+        if mode == 0:
+            self.gamepad.press_button(vg.DS4_SPECIAL_BUTTONS.DS4_SPECIAL_BUTTON_PS)
+            await asyncio.sleep(0.125)
+            self.gamepad.release_button(vg.DS4_SPECIAL_BUTTONS.DS4_SPECIAL_BUTTON_PS)
+        # 1 仅按下
+        if mode == 1:
+            self.gamepad.press_button(vg.DS4_SPECIAL_BUTTONS.DS4_SPECIAL_BUTTON_PS)
+        
+        # 2 仅松开
+        if mode == 2:
+            self.gamepad.release_button(vg.DS4_SPECIAL_BUTTONS.DS4_SPECIAL_BUTTON_PS)
+    
+    # pad
+    async def pressButtonTouchpad(self,mode = 0):
+        print("press button Touchpad")
+        # 0 快速按下，约150ms后释放
+        if mode == 0:
+            self.gamepad.press_button(vg.DS4_SPECIAL_BUTTONS.DS4_SPECIAL_BUTTON_TOUCHPAD)
+            await asyncio.sleep(0.125)
+            self.gamepad.release_button(vg.DS4_SPECIAL_BUTTONS.DS4_SPECIAL_BUTTON_TOUCHPAD)
+        # 1 仅按下
+        if mode == 1:
+            self.gamepad.press_button(vg.DS4_SPECIAL_BUTTONS.DS4_SPECIAL_BUTTON_TOUCHPAD)
+        
+        # 2 仅松开
+        if mode == 2:
+            self.gamepad.release_button(vg.DS4_SPECIAL_BUTTONS.DS4_SPECIAL_BUTTON_TOUCHPAD)
+
+
 
     def pressCross(self,mode = 0):
         self.queueCross.put_nowait(self.pressButtonCross(mode))
@@ -235,16 +272,74 @@ class GamepadTaskHandler():
 
     def pressCircle(self,mode = 0):
         self.queueCircle.put_nowait(self.pressButtonCircle(mode))
-
-    async def production_tasks(self): #,queueLeftStick,queueRightStick,queueCross,queueCircle,queueSquare,queueTriangle,queueDpadUp,queueDpadDown,queueDpadLeft,queueDpadRight,queueShoulderLeft,queueShoulderRight,queueTriggerLeft,queueTriggerRight):
-        # queueCross.put_nowait(self.pressButtonCross())
-        # queueDpadRight.put_nowait(self.pressButtonDpadRight())
-        self.pressCross()
-        # self.pressSquare()
-        await asyncio.sleep(1)
-        self.pressCircle()
-        # queueCross.put_nowait(self.pressButtonCross())
         
+    def pressTriangle(self,mode = 0):
+        self.queueTriangle.put_nowait(self.pressButtonTriangle(mode))
+        
+    def pressDpad(self,which = "up",mode = 0):
+        self.queueDpad.put_nowait(self.pressButtonDpad(which,mode))
+        
+    def pressOptions(self,mode = 0):
+        self.queueOptions.put_nowait(self.pressButtonOptions(mode))
+        
+    def pressShare(self,mode = 0):
+        self.queueShare.put_nowait(self.pressButtonShare(mode))
+        
+    def pressPS(self,mode = 0):
+        self.queuePS.put_nowait(self.pressButtonPS(mode))
+
+    def pressTouchpad(self,mode = 0):
+        self.queueTouchpad.put_nowait(self.pressButtonTouchpad(mode))
+        
+    def leftStick(self,x,y):
+        self.queueLeftStick.put_nowait(self.setLeftStick(x,y))
+        
+    def rightStick(self,x,y):
+        self.queueRightStick.put_nowait(self.setRightStick(x,y))
+        
+    def pressL1(self,mode = 0):
+        self.queueShoulderLeft.put_nowait(self.pressButtonShoulderLeft(mode))
+
+    def pressL2(self,mode = 0):
+        self.queueTriggerLeft.put_nowait(self.pressButtonTriggerLeft(mode))
+
+    def pressR1(self,mode = 0):
+        self.queueShoulderRight.put_nowait(self.pressButtonShoulderRight(mode))
+
+    def pressR2(self,mode = 0):
+        self.queueTriggerRight.put_nowait(self.pressButtonTriggerRight(mode))
+
+
+
+    async def production_tasks(self): 
+        ## 如何决策
+        # for i in range(4):
+        #     self.pressCross()
+        #     # self.pressSquare()
+        #     await asyncio.sleep(1)
+        #     self.pressDpad(i)
+        #     await asyncio.sleep(1)
+        # queueCross.put_nowait(self.pressButtonCross())
+        async def changeToKeyboard():
+            # self.pressOptions()
+            # await asyncio.sleep(1)
+            # self.leftStick(1.0,0)
+            # self.pressTouchpad(mode=1)
+            # self.pressDpad("down")
+            # await asyncio.sleep(1)
+            # self.leftStick(0,1) # 选中最上方
+            # await asyncio.sleep(3)
+            # self.pressCircle() # 确认
+            # await asyncio.sleep(0.61)
+            # self.pressCircle() # 修改键鼠
+            # await asyncio.sleep(0.61)
+            self.pressCircle() # 确认修改键鼠
+            # await asyncio.sleep(2)
+            # self.leftStick(0,0)
+            # self.pressCross()
+            # self.pressDpad("left")
+        task = asyncio.create_task(changeToKeyboard())
+        await task
 
     async def consumer(self,queue):
         while True:
@@ -267,14 +362,15 @@ class GamepadTaskHandler():
         self.queueCircle = asyncio.Queue(10)
         self.queueSquare = asyncio.Queue(10)
         self.queueTriangle = asyncio.Queue(10)
-        self.queueDpadUp = asyncio.Queue(10)
-        self.queueDpadDown = asyncio.Queue(10)
-        self.queueDpadLeft = asyncio.Queue(10)
-        self.queueDpadRight = asyncio.Queue(10)
+        self.queueDpad = asyncio.Queue(10)
         self.queueShoulderLeft = asyncio.Queue(10)
         self.queueShoulderRight = asyncio.Queue(10)
         self.queueTriggerLeft = asyncio.Queue(10)
         self.queueTriggerRight = asyncio.Queue(10)
+        self.queueOptions = asyncio.Queue(10)
+        self.queueShare = asyncio.Queue(10)
+        self.queuePS = asyncio.Queue(10)
+        self.queueTouchpad = asyncio.Queue(10)
         # 创建异步 生产任务
         consumerTask = asyncio.create_task(self.production_tasks( ))#queueLeftStick,queueRightStick ,queueCross,queueCircle,queueSquare,queueTriangle,queueDpadUp,queueDpadDown,queueDpadLeft,queueDpadRight,queueShoulderLeft,queueShoulderRight,queueTriggerLeft,queueTriggerRight))
         # 创建异步 消费任务
@@ -290,13 +386,7 @@ class GamepadTaskHandler():
 
         triangleTask = asyncio.create_task(self.consumer(self.queueTriangle))
 
-        dpadUpTask = asyncio.create_task(self.consumer(self.queueDpadUp))
-
-        dpadDownTask = asyncio.create_task(self.consumer(self.queueDpadDown))
-
-        dpadLeftTask = asyncio.create_task(self.consumer(self.queueDpadLeft))
-
-        dpadRightTask = asyncio.create_task(self.consumer(self.queueDpadRight))
+        dpadTask = asyncio.create_task(self.consumer(self.queueDpad))
         
         shoulderLeftTask =asyncio.create_task(self.consumer(self.queueShoulderLeft))
         
@@ -305,6 +395,14 @@ class GamepadTaskHandler():
         triggerLeftTask = asyncio.create_task(self.consumer(self.queueTriggerLeft))
         
         triggerRightTask = asyncio.create_task(self.consumer(self.queueTriggerRight))
+        
+        optionsTask = asyncio.create_task(self.consumer(self.queueOptions))
+        
+        shareTask = asyncio.create_task(self.consumer(self.queueShare))
+        
+        psTask = asyncio.create_task(self.consumer(self.queuePS))
+        
+        touchpadTask = asyncio.create_task(self.consumer(self.queueTouchpad))
 
         await leftStickTask
         await rightStickTask
@@ -313,21 +411,22 @@ class GamepadTaskHandler():
         await circleTask
         await squareTask 
         await triangleTask 
-        await dpadUpTask
-        await dpadDownTask
-        await dpadLeftTask
-        await dpadRightTask
+        await dpadTask
         await shoulderLeftTask
         await shoulderRightTask
         await triggerLeftTask
         await triggerRightTask
+        await optionsTask
+        await shareTask
+        await psTask
+        await touchpadTask
 
 
-    async def setGamepadStatus(self,message = []):
-        '''改变gamepad的状态'''
-        while True:
-            print("try to set gamepad")
-            await asyncio.sleep(1)
+    # async def setGamepadStatus(self,message = []):
+    #     '''改变gamepad的状态'''
+    #     while True:
+    #         print("try to set gamepad")
+    #         await asyncio.sleep(1)
 
 
     async def updateGamepad(self,dt):
@@ -340,12 +439,18 @@ class GamepadTaskHandler():
     async def mainGamePad(self,dt):
         await asyncio.gather(
             self.updateGamepad(dt),
-            self.setGamepadStatus(),
+            # self.setGamepadStatus(),
             self.queueHandle()
         )
 
     def run(self):
         asyncio.run(self.mainGamePad(1/120))
+
+
+
+
+
+
 if __name__ == "__main__":
     GPHD = GamepadTaskHandler(vg.VDS4Gamepad())
     GPHD.run()
