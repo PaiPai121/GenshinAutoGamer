@@ -57,7 +57,7 @@ if __name__ == "__main__":
     import cv2
     handle = windll.user32.FindWindowW(None, "原神")
     image = capture(handle)
-    cv2.imwrite("./assets/GamePadSetting.png",image)
+    cv2.imwrite("./assets/fishingReady.png",image)
     checker = PatternChecker()
     region = cv2.imread("./assets/exit.png",cv2.IMREAD_UNCHANGED)
     region = cv2.cvtColor(region,cv2.COLOR_BGR2RGB)

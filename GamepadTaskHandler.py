@@ -327,19 +327,44 @@ class GamepadTaskHandler():
             # self.pressTouchpad(mode=1)
             # self.pressDpad("down")
             # await asyncio.sleep(1)
-            # self.leftStick(0,1) # 选中最上方
-            # await asyncio.sleep(3)
-            # self.pressCircle() # 确认
-            # await asyncio.sleep(0.61)
-            # self.pressCircle() # 修改键鼠
-            # await asyncio.sleep(0.61)
+            
+            self.leftStick(0,1) # 选中最上方
+            await asyncio.sleep(3)
+            self.pressCircle() # 确认
+            await asyncio.sleep(0.61)
+            self.pressCircle() # 修改键鼠
+            await asyncio.sleep(0.61)
             self.pressCircle() # 确认修改键鼠
             # await asyncio.sleep(2)
             # self.leftStick(0,0)
             # self.pressCross()
             # self.pressDpad("left")
-        task = asyncio.create_task(changeToKeyboard())
+        
+        async def quitGame():
+            self.pressOptions() # 进入设置菜单    
+            await asyncio.sleep(0.61)
+            self.pressSquare(mode=1)
+            await asyncio.sleep(5)
+            self.pressSquare(mode=2)
+            
+        async def fishing(mode = 1):
+            if mode == 1:
+                self.pressSquare() # 进入钓鱼
+                
+                self.pressCircle() # 开始钓鱼
+            if mode == 0:#退出钓鱼
+                self.pressCross()
+                await asyncio.sleep(0.4)
+                self.pressCircle()
+        
+        async def quitMenu():
+            self.pressCross() 
+            await asyncio.sleep(0.4)
+            self.pressCross() 
+    
+        task = asyncio.create_task(quitGame())#fishing(0)) #quitMenu())#changeToKeyboard())
         await task
+        
 
     async def consumer(self,queue):
         while True:
